@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
-import Spinner from './spinner'
-
+// import Spinner from './spinner';
 
 export class News extends Component {
 
@@ -9,44 +8,44 @@ export class News extends Component {
     super();
     this.state={
       articles: [],
-      loading: true,
+      loading: false,
       page: 1
     }
 }
 
 async componentDidMount(){
     let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=dc154621823d4f3ebe422aec2b44cb8d&page=1&pageSize=${this.props.pageSize}`
-    this.setState({loading:true});
+    // this.setState({loading:true});
     let data = await fetch(url);
     let parsedData = await data.json();
-    console.log(parsedData);
-    this.setState({articles : parsedData.articles, totalResults: parsedData.totalResults, loading: false})
+    // console.log(parsedData);
+    this.setState({articles : parsedData.articles, totalResults: parsedData.totalResults})
 }
 
     handlePrevClick = async() =>{
         let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=dc154621823d4f3ebe422aec2b44cb8d&page=${this.state.page - 1}&pageSize=${this.props.pageSize }`
-        this.setState({loading:true});
+        // this.setState({loading:true});
         let data = await fetch(url);
         let parsedData = await data.json();
-        console.log(parsedData);
+        // console.log(parsedData);
         this.setState({
             page : this.state.page - 1,
             articles : parsedData.articles,
-            loading : false,
+            // loading : false,
         })
     }
 
     handleNextClick = async() =>{
         if(!(this.state.page + 1 > Math.ceil(this.state.totalResults/this.props.pageSize))){
             let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=dc154621823d4f3ebe422aec2b44cb8d&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`
-            this.setState({loading:true});
+            // this.setState({loading:true});
             let data = await fetch(url);
             let parsedData = await data.json();
-            console.log(parsedData);
+            // console.log(parsedData);
             this.setState({
                 page : this.state.page + 1,
                 articles : parsedData.articles,
-                loading : false,
+                // loading : false,
             })
         }
        
@@ -56,7 +55,7 @@ async componentDidMount(){
     return (
       <div className='container my-3'>
         <h2 className='text-center'>NewsInSecond - Top Headlines</h2>
-        {this.state.loading && <Spinner />}
+        {/* {this.state.loading && <Spinner />} */}
         <div className="row my-4">
           {!this.state.loading && this.state.articles.map((element) => {
             const title = element.title ? (element.title.length >= 45 ? element.title.slice(0, 45) : element.title) : '';
